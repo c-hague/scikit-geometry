@@ -1,6 +1,8 @@
 #include "skgeom.hpp"
 #include "funcs.hpp"
 
+#include <CGAL/Boolean_set_operations_2.h>
+
 struct Intersection_visitor {
   typedef py::object result_type;
   template<typename T>
@@ -647,6 +649,9 @@ void init_skgeom_kernel(py::module &m) {
     m.def("do_intersect", &do_intersect<Segment_2, Segment_2>);
     m.def("do_intersect", &do_intersect<Ray_2, Line_2>);
     m.def("do_intersect", &do_intersect<Ray_2, Segment_2>);
+    m.def("do_intersect", &do_intersect<Polygon_2, Polygon_2>);
+    m.def("do_intersect", &do_intersect<Polygon_with_holes_2, Polygon_2>);
+    m.def("do_intersect", &do_intersect<Polygon_with_holes_2, Polygon_with_holes_2>);
     
     m.def("intersection", &intersect<Line_2, Line_2>);
     m.def("intersection", &intersect<Line_2, Segment_2>);
