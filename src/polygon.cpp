@@ -28,6 +28,10 @@ Point_2 centroid(Polygon_2& poly) {
     return CGAL::centroid(poly.vertices_begin(), poly.vertices_end(), CGAL::Dimension_tag<0>());
 }
 
+Polygon_2 transform(const Transformation_2& t, const Polygon_2 p) {
+    return CGAL::transform(t, p);
+}
+
 void build_polygon_from_vertices(Polygon_2& poly, const py::array_t<double>& vertices) {
     auto r = vertices.unchecked<2>();
     if (r.shape(1) != 2) {
@@ -89,6 +93,8 @@ void init_polygon(py::module &m) {
                 s, py::arg("facecolor") = "lightgray");
         })
     ;
+
+    m.def("transform", &transform);
 
     m.def("centroid", &centroid);
 
